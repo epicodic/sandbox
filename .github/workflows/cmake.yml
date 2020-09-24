@@ -35,6 +35,14 @@ jobs:
     - name: Build
       working-directory: ${{runner.workspace}}/build
       shell: bash
-      # Execute the build.  You can specify a specific target with "--target <NAME>"
       run: cmake --build . --config $BUILD_TYPE
 
+    - name: Packaging
+      working-directory: ${{runner.workspace}}/build
+      shell: bash
+      run: cpack
+      
+    - uses: actions/upload-artifact@v2
+      with:
+        name: package
+        path: ${{runner.workspace}}/build/*.deb
