@@ -1,4 +1,4 @@
-name: CMake
+name: Sandbox
 
 on: [push]
 
@@ -12,7 +12,7 @@ jobs:
     env: 
       DISTRO_CODENAME: bionic
 
-    steps:
+    steps: &build-steps
     - uses: actions/checkout@v2
 
     - name: Create Build Environment
@@ -43,4 +43,12 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: package
-        path: ${{runner.workspace}}/build/*.deb
+        path: ${{runner.workspace}}/build/*.deb    
+        
+  build-xenial:
+    runs-on: ubuntu-16.04
+    env: 
+      DISTRO_CODENAME: xenial
+    steps: *build-steps
+    
+    
